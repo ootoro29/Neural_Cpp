@@ -6,46 +6,6 @@
 #include "Matrix.h"
 
 namespace Neural{
-    class sigmoid_layor : layor{
-        double f(double x){
-            return 1/(1+std::exp(-x));
-        }
-        double df(double x){
-            return f(x)*(1-f(x));
-        }
-    };
-    class tanh_layor : layor{
-        double f(double x){
-            return std::tanh(x);
-        }
-        double df(double x){
-            return 1/std::cosh(x);
-        }
-    };
-    class identity_layor : layor{
-        double f(double x){
-            return x;
-        }
-        double df(double x){
-            return 1;
-        }
-    };
-    class relu_layor : layor{
-        double f(double x){
-            return std::min(x,(double)0);
-        }
-        double df(double x){
-            return (x > 0)? 1 : 0;
-        }
-    };
-    class likely_relu_layor : layor{
-        double f(double x){
-            return std::min(x,0.01*x);
-        }
-        double df(double x){
-            return (x > 0)? 1 : 0.01;
-        }
-    };
     class layor{
         private:
             Matrix z,a;
@@ -94,6 +54,17 @@ namespace Neural{
                 }
                 return d;
             }
+            Matrix out_bc(const Matrix ANS){
+                d = a-ANS;
+                for(int i = 0; i < l; i++){
+                    d[i][0] *= df(z[i][0]);
+                }
+                return d;
+            }
+            Matrix w_push(){
+                Matrix W = w;
+                return W;
+            }
             void reset_W(){
                 for(int i = 0; i < l; i++){
                     for(int j = 0; j < In.c; j++){
@@ -102,9 +73,57 @@ namespace Neural{
                     b[i][0] -= alpha*d[i][0];
                 }
             }
-            virtual double f(double x);
-            virtual double df(double x);
+            virtual double f(double x) = 0;
+            virtual double df(double x) = 0;
     };
+    class sigmoid_layor : public layor
+    {
+        public:
+            sigmoid_layor(int _l,double _alpha): layor(_l,_alpha){}
+            double f(double x){
+                return 1/(1+std::exp(-x));
+            }
+            double df(double x){
+                return f(x)*(1-f(x));
+            }
+    };
+    class tanh_layor : layor{
+        tanh_layor(int _l,double _alpha): layor(_l,_alpha){}
+        double f(double x){
+            return std::tanh(x);
+        }
+        double df(double x){
+            return 1/std::cosh(x);
+        }
+    };
+    class identity_layor : layor{
+        identity_layor(int _l,double _alpha): layor(_l,_alpha){}
+        double f(double x){
+            return x;
+        }
+        double df(double x){
+            return 1;
+        }
+    };
+    class relu_layor : layor{
+        relu_layor(int _l,double _alpha): layor(_l,_alpha){}
+        double f(double x){
+            return std::min(x,(double)0);
+        }
+        double df(double x){
+            return (x > 0)? 1 : 0;
+        }
+    };
+    class likely_relu_layor : layor{
+        likely_relu_layor(int _l,double _alpha): layor(_l,_alpha){}
+        double f(double x){
+            return std::min(x,0.01*x);
+        }
+        double df(double x){
+            return (x > 0)? 1 : 0.01;
+        }
+    };
+    
 }
 
 #endif // LAYOR_H_
