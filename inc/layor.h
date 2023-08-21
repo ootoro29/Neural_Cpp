@@ -6,9 +6,46 @@
 #include "Matrix.h"
 
 namespace Neural{
-    
-
-
+    class sigmoid_layor : layor{
+        double f(double x){
+            return 1/(1+std::exp(-x));
+        }
+        double df(double x){
+            return f(x)*(1-f(x));
+        }
+    };
+    class tanh_layor : layor{
+        double f(double x){
+            return std::tanh(x);
+        }
+        double df(double x){
+            return 1/std::cosh(x);
+        }
+    };
+    class identity_layor : layor{
+        double f(double x){
+            return x;
+        }
+        double df(double x){
+            return 1;
+        }
+    };
+    class relu_layor : layor{
+        double f(double x){
+            return std::min(x,(double)0);
+        }
+        double df(double x){
+            return (x > 0)? 1 : 0;
+        }
+    };
+    class likely_relu_layor : layor{
+        double f(double x){
+            return std::min(x,0.01*x);
+        }
+        double df(double x){
+            return (x > 0)? 1 : 0.01;
+        }
+    };
     class layor{
         private:
             Matrix z,a;
