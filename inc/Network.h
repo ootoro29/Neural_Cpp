@@ -21,14 +21,13 @@ namespace Neural{
             Matrix out;
         
         public:
-            NetWork(std::vector<int>k): out(k[k.size()-1],1),ans(k[k.size()-1],1),in(k[0],1){
-                N = k.size();
+            NetWork(std::vector<layor>_L): out(_L[_L.size()-1].node_cn(),1),ans(_L[_L.size()-1].node_cn(),1),in(_L[0].node_cn(),1){
+                N = _L.size();
                 for(int i = 0; i < N; i++){
-                    layor L(k[i]);
-                    net.push_back(L);
+                    net.push_back(_L[i]);
                 }
                 for(int i = 1; i < N; i++){
-                    net[i].set_W(k[i-1]);
+                    net[i].set_W(_L[i-1].node_cn());
                 }
             }
             void learning(std::vector<double> inx,std::vector<double> aa);
