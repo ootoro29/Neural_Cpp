@@ -56,8 +56,9 @@ namespace Neural{
             int l;
             double alpha;
         public:
-            layor(int _l): z(_l,1),a(_l,1),b(_l,1),d(_l,1),w(0,0),In(0,0){
+            layor(int _l,double _alpha): z(_l,1),a(_l,1),b(_l,1),d(_l,1),w(0,0),In(0,0){
                 l = _l;
+                alpha = _alpha;
                 for(int i = 0; i < _l; i++){
                     z[i][0] = 0;
                     a[i][0] = 0;
