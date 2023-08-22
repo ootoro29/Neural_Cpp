@@ -87,41 +87,45 @@ namespace Neural{
                 return f(x)*(1-f(x));
             }
     };
-    class tanh_layor : layor{
-        tanh_layor(int _l,double _alpha): layor(_l,_alpha){}
-        double f(double x){
-            return std::tanh(x);
-        }
-        double df(double x){
-            return 1/std::cosh(x);
-        }
+    class tanh_layor : public layor{
+        public:
+            tanh_layor(int _l,double _alpha): layor(_l,_alpha){}
+            double f(double x){
+                return std::tanh(x);
+            }
+            double df(double x){
+                return 1/std::cosh(x);
+            }
     };
-    class identity_layor : layor{
-        identity_layor(int _l,double _alpha): layor(_l,_alpha){}
-        double f(double x){
-            return x;
-        }
-        double df(double x){
-            return 1;
-        }
+    class identity_layor : public layor{
+        public:
+            identity_layor(int _l,double _alpha): layor(_l,_alpha){}
+            double f(double x){
+                return x;
+            }
+            double df(double x){
+                return 1;
+            }
     };
-    class relu_layor : layor{
-        relu_layor(int _l,double _alpha): layor(_l,_alpha){}
-        double f(double x){
-            return std::min(x,(double)0);
-        }
-        double df(double x){
-            return (x > 0)? 1 : 0;
-        }
+    class relu_layor : public layor{
+        public:
+            relu_layor(int _l,double _alpha): layor(_l,_alpha){}
+            double f(double x){
+                return std::min(x,(double)0);
+            }
+            double df(double x){
+                return (x > 0)? 1 : 0;
+            }
     };
-    class likely_relu_layor : layor{
-        likely_relu_layor(int _l,double _alpha): layor(_l,_alpha){}
-        double f(double x){
-            return std::min(x,0.01*x);
-        }
-        double df(double x){
-            return (x > 0)? 1 : 0.01;
-        }
+    class likely_relu_layor : public layor{
+        public:
+            likely_relu_layor(int _l,double _alpha): layor(_l,_alpha){}
+            double f(double x){
+                return std::min(x,0.01*x);
+            }
+            double df(double x){
+                return (x > 0)? 1 : 0.01;
+            }
     };
     
 }

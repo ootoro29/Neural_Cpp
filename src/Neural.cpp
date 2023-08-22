@@ -6,10 +6,9 @@
 
 int main(){
     std::vector<Neural::layor*>L;
-    L.push_back(new Neural::sigmoid_layor(3,1.5));
-    L.push_back(new Neural::sigmoid_layor(4,1.5));
-    L.push_back(new Neural::sigmoid_layor(3,1.5));
-    L.push_back(new Neural::sigmoid_layor(2,1.5));
+    L.push_back(new Neural::relu_layor(3,1.5));
+    L.push_back(new Neural::sigmoid_layor(7,0.2));
+    L.push_back(new Neural::identity_layor(2,0.4));
     Neural::NetWork N_N(L);
     std::vector<std::vector<double>>Data_S = {{0,0,0},{1,0,0},{0,1,0},{1,1,0},{0,0,1},{1,0,1},{0,1,1},{1,1,1}};
     std::vector<std::vector<double>>Data_A = {{0,1},{0,1},{1,0},{1,1},{0,0},{1,0},{0,1},{1,1}};
