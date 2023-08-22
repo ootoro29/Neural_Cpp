@@ -111,7 +111,7 @@ namespace Neural{
         public:
             relu_layor(int _l,double _alpha): layor(_l,_alpha){}
             double f(double x){
-                return std::min(x,(double)0);
+                return std::max(x,(double)0);
             }
             double df(double x){
                 return (x > 0)? 1 : 0;
@@ -121,7 +121,7 @@ namespace Neural{
         public:
             likely_relu_layor(int _l,double _alpha): layor(_l,_alpha){}
             double f(double x){
-                return std::min(x,0.01*x);
+                return std::max(x,0.01*x);
             }
             double df(double x){
                 return (x > 0)? 1 : 0.01;
