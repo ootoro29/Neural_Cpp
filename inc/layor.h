@@ -6,6 +6,36 @@
 #include "Matrix.h"
 
 namespace Neural{
+    double sigmoid(double x){
+        return 1/(1+std::exp(-x));
+    }
+    double dsigmoid(double x){
+        return sigmoid(x)*(1-sigmoid(x));
+    }
+    double tanh(double x){
+        return std::tanh(x);
+    }
+    double dtanh(double x){
+        return 1/std::cosh(x);
+    }
+    double identity(double x){
+        return x;
+    }
+    double didentity(double x){
+        return 1;
+    }
+    double relu(double x){
+        return std::max(x,(double)0);
+    }
+    double drelu(double x){
+        return (x > 0)? 1 : 0;
+    }
+    double likely_relu(double x){
+        return std::max(x,0.01*x);
+    }
+    double dlikely_relu(double x){
+        return (x > 0)? 1 : 0.01;
+    }
     class layor{
         private:
             Matrix z,a;
@@ -81,53 +111,52 @@ namespace Neural{
         public:
             sigmoid_layor(int _l,double _alpha): layor(_l,_alpha){}
             double f(double x){
-                return 1/(1+std::exp(-x));
+                return sigmoid(x);
             }
             double df(double x){
-                return f(x)*(1-f(x));
+                return dsigmoid(x);
             }
     };
     class tanh_layor : public layor{
         public:
             tanh_layor(int _l,double _alpha): layor(_l,_alpha){}
             double f(double x){
-                return std::tanh(x);
+                return tanh(x);
             }
             double df(double x){
-                return 1/std::cosh(x);
+                return dtanh(x);
             }
     };
     class identity_layor : public layor{
         public:
             identity_layor(int _l,double _alpha): layor(_l,_alpha){}
             double f(double x){
-                return x;
+                return identity(x);
             }
             double df(double x){
-                return 1;
+                return didentity(x);
             }
     };
     class relu_layor : public layor{
         public:
             relu_layor(int _l,double _alpha): layor(_l,_alpha){}
             double f(double x){
-                return std::max(x,(double)0);
+                return relu(x);
             }
             double df(double x){
-                return (x > 0)? 1 : 0;
+                return drelu(x);
             }
     };
     class likely_relu_layor : public layor{
         public:
             likely_relu_layor(int _l,double _alpha): layor(_l,_alpha){}
             double f(double x){
-                return std::max(x,0.01*x);
+                return likely_relu(x);
             }
             double df(double x){
-                return (x > 0)? 1 : 0.01;
+                return dlikely_relu(x);
             }
     };
-    
 }
 
 #endif // LAYOR_H_

@@ -1,6 +1,6 @@
 #ifndef MATRIX_H_
 #define MATRIX_H_
-
+#include <assert.h>
 #include<iostream>
 #include<vector>
 #include <random>
