@@ -37,7 +37,7 @@ namespace Neural{
                     ans[i][0] = aa[i];
                 }
                 keisan(inx);
-                fix(inx);
+                fix();
             }
             void dis_out(){
                 for(int i = 0; i < in.c; i++){
@@ -59,7 +59,7 @@ namespace Neural{
                     out[i][0] = X[i][0];
                 }
             }
-            void fix(Matrix in){
+            void fix(){
                 Matrix C = net[N-1]->out_bc(ans);
                 Matrix W = net[N-1]->w_push();
                 for(int i = 0; i < N-1; i++){
