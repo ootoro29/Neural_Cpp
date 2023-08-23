@@ -33,8 +33,8 @@ namespace Neural{
             int c;
             int a_len;
             int out_size = 0;
-            double alpha = 0.01;//0.0001
-            double alpha2 = 0.02;//0.0002
+            double alpha = 0.001;//0.0001
+            double alpha2 = 0.002;//0.0002
             std::vector<std::vector<std::pair<int,int>>> max_index;
         public:
             CNN(int _l,int _a,int _k,int _c,int _o):In(_k,Matrix(_l,_l)),b_F(_k,1),b_O(_o,1),Out(_o,1),d_O(_o,1),z_o(_o,1),a_o(_o,1){

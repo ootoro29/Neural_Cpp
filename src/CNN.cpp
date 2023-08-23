@@ -6,7 +6,7 @@
 #include "../inc/CNN.h"
 
 int main(){
-    Neural::CNN C(7,4,4,2,3);
+    Neural::CNN C(7,4,36,2,3);
     double in[7][7] = {0,1,1,0,1,0,0,
                        0,0,1,1,1,0,1,
                        1,0,0,0,1,0,1,
@@ -42,8 +42,8 @@ int main(){
     for(int i = 0; i < 3; i++){
         Ans[i][0] = A[i];
     }
-    for(int i = 0; i < 4000; i++){
-        if(i%100 == 0){
+    for(int i = 0; i < 200; i++){
+        if(i%10 == 0){
             std::cout<<"---------------"<<std::endl;
             C.keisan(M).show();
             std::cout<<"---------------"<<std::endl;
